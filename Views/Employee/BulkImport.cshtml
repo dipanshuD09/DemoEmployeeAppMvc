@@ -1,0 +1,19 @@
+@{
+    ViewData["Title"] = "Bulk Import Employees";
+}
+
+<h2>Bulk Import Employees</h2>
+
+<form asp-action="BulkImport" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="file">Upload CSV File</label>
+        <input type="file" name="file" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Import</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}

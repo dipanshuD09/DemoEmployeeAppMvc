@@ -1,0 +1,73 @@
+# Ignore build results
+bin/
+obj/
+
+# Visual Studio specific files
+.vs/
+*.user
+*.suo
+*.vcxproj.user
+*.pdb
+
+# Rider IDE specific files
+.idea/
+*.sln.iml
+
+# Build directories
+artifacts/
+build/
+publish/
+
+
+
+# Logs and other transient files
+*.log
+*.tlog
+*.log*
+
+# User-specific files
+*.rsuser
+*.sln.docstates
+
+# Dependencies
+**/node_modules/
+*.nupkg
+*.snupkg
+packages/
+*.lock.json
+
+# Database and migration files
+*.mdf
+*.ldf
+*.db
+
+
+# System-specific files
+*.DS_Store
+Thumbs.db
+
+# Resharper
+_ReSharper*/
+*.*~resharper
+resharper.xml
+
+
+# Temporary files
+~$*
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+
+# Publish output
+*.publish*
+
+# Runtime-generated files
+*.dll
+*.exe
+*.runtimeconfig.json
+*.deps.json
+*.runtimeconfig.dev.json
+*.log
+*.map
