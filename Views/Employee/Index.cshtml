@@ -9,6 +9,13 @@
     <a asp-action="BulkImport" class="btn btn-primary">Bulk Import</a>
 </p>
 
+<form asp-action="Index" method="get" class="mb-3">
+    <div class="input-group">
+        <input type="text" name="searchTerm" class="form-control" placeholder="Search employees..." value="@ViewBag.SearchTerm" />
+        <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+</form>
+
 <table class="table">
     <thead>
         <tr>
@@ -21,7 +28,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach(var employee in Model)
+        @foreach (var employee in Model)
         {
             <tr>
                 <td>@employee.Id</td>
@@ -39,3 +46,66 @@
         }
     </tbody>
 </table>
+
+<div class="d-flex justify-content-between align-items-center mt-3">
+    <div>
+        Page @ViewBag.CurrentPage of @ViewBag.TotalPages
+    </div>
+    <nav>
+        <ul class="pagination">
+            @if (ViewBag.CurrentPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action("Index", new { pageNumber = ViewBag.CurrentPage - 1, searchTerm = ViewBag.SearchTerm })">&laquo; Previous</a>
+                </li>
+            }
+
+            @{
+                int totalPages = ViewBag.TotalPages;
+                int currentPage = ViewBag.CurrentPage;
+                int startPage = Math.Max(1, currentPage - 2);
+                int endPage = Math.Min(totalPages, currentPage + 2);
+
+                if (startPage > 1)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="@Url.Action("Index", new { pageNumber = 1, searchTerm = ViewBag.SearchTerm })">1</a>
+                    </li>
+                    if (startPage > 2)
+                    {
+                        <li class="page-item disabled">
+                            <span class="page-link">...</span>
+                        </li>
+                    }
+                }
+
+                for (int i = startPage; i <= endPage; i++)
+                {
+                    <li class="page-item @(i == currentPage ? "active" : "")">
+                        <a class="page-link" href="@Url.Action("Index", new { pageNumber = i, searchTerm = ViewBag.SearchTerm })">@i</a>
+                    </li>
+                }
+
+                if (endPage < totalPages)
+                {
+                    if (endPage < totalPages - 1)
+                    {
+                        <li class="page-item disabled">
+                            <span class="page-link">...</span>
+                        </li>
+                    }
+                    <li class="page-item">
+                        <a class="page-link" href="@Url.Action("Index", new { pageNumber = totalPages, searchTerm = ViewBag.SearchTerm })">@totalPages</a>
+                    </li>
+                }
+            }
+
+            @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action("Index", new { pageNumber = ViewBag.CurrentPage + 1, searchTerm = ViewBag.SearchTerm })">Next &raquo;</a>
+                </li>
+            }
+        </ul>
+    </nav>
+</div>

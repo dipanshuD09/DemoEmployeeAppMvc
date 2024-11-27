@@ -24,9 +24,29 @@ namespace DemoMvcApplication.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(string searchTerm, int pageNumber = 1)
         {
-            return View(_empDbContext.employees.ToList());
+            //return View(_empDbContext.employees.ToList());
+            var query = _empDbContext.employees.AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                query = query.Where(e => e.Name.Contains(searchTerm) ||
+                                 e.Gender.Contains(searchTerm) ||
+                                 e.Place.Contains(searchTerm));
+            }
+
+
+            var totalEmployees = query.Count();
+            var employees = query.OrderBy(e => e.Id)
+                                           .Skip((pageNumber - 1) * 20)
+                                           .Take(20)
+                                           .ToList();
+
+            ViewBag.TotalPages = (int)Math.Ceiling(totalEmployees / (double)20);
+            ViewBag.CurrentPage = pageNumber;
+
+            return View(employees);
         }
 
         [HttpGet("/Create")]
