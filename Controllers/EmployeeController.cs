@@ -137,7 +137,7 @@ namespace DemoMvcApplication.Controllers
                             var line = await reader.ReadLineAsync();
                             var values = line.Split(',');
 
-                            if (values.Length != 5)
+                            if (values.Length != 4)
                             {
                                 ModelState.AddModelError("File", $"Invalid number of columns on line {lineNumber}");
                                 continue;
